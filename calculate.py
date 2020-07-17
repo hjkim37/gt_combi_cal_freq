@@ -2,6 +2,7 @@
 
 import os
 import itertools
+import click
 import pandas as pd
 import numpy as np
 
@@ -26,7 +27,7 @@ class Get_Combined_Freq:
     
     numeric_cols = ['KRGDB', 'African', 'Latino', 'East_Asian', 'Finnish', 'European']
 
-    def __init__(input):
+    def __init__(self, input):
         
         self.df = pd.read_csv(input, sep = '\t')
         self.outdir = os.path.dirname(input)
