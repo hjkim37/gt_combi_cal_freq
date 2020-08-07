@@ -42,6 +42,7 @@ class Get_Combined_Freq:
             self.df['hetero'] = self.df['REF'] + self.df['ALT']
             self.df['alt_homo'] = self.df['ALT'] + self.df['ALT']   
         
+        self.df_drop = self.df.drop_duplicates(subset = ['rsid'])
         
         if 'trait' in self.df.columns:
             for trait in self.df['trait'].unique():
@@ -82,7 +83,7 @@ class Get_Combined_Freq:
         df_freq = self.df.set_index('rsid')
         df_final =  combined.copy()
         
-        for population in numeric_cols:
+        for population in self.numeric_cols:
             tmp = combined.copy()
             for idx, rsid in enumerate(tmp.columns):
                 ref_homo = df_freq.loc[rsid, 'ref_homo']
@@ -91,7 +92,7 @@ class Get_Combined_Freq:
                 
                 ref_homo_freq = (1 - df_freq.loc[rsid, population]) * (1 - df_freq.loc[rsid, population])
                 hetero_freq = (df_freq.loc[rsid, population]) * (1 - df_freq.loc[rsid, population])
-                alt_homo_freq = (df_freq.loc[rsid, population]) 
+                alt_homo_freq = (df_freq.loc[rsid, population])
                 
                 col_name = f'{rsid}_{population}'
                 
